@@ -1,0 +1,100 @@
+{
+  "name": "@webship.co/workspace-material-ui",
+  "version": "1.0.0",
+  "description": "Material UI for Webship Workspace: the builder (`cmd-material-ui-project.sh`) in every sites folder, which makes an app with Material UI's own Vite starter (with the Material UI step pack's demo by default: its free templates and documentation demos; or the starter alone) or takes one from its repository, builds it and serves its production build from a container of its own (Node.js in the app's container; DDEV by default, or Docker Compose, Podman or Kubernetes with --runtime), the Material UI step pack wired into the testing setup of such an app, and its AI items in their folders: two agents, a skill, a command and two prompts for building and testing Material UI apps.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "license": "ISC",
+  "engines": {
+    "node": ">=24"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webship/workspace-material-ui.git"
+  },
+  "files": [
+    "dist/src",
+    "ai",
+    "commands",
+    "features",
+    "scripts",
+    "testing",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "prepare": "npm run build",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "lint": "tsc -p tsconfig.json --noEmit"
+  },
+  "workspacePlugin": {
+    "name": "material-ui",
+    "label": "Material UI",
+    "needs": [
+      [
+        "dev",
+        "test",
+        "sandboxes",
+        "demos"
+      ],
+      "ai-agents",
+      "ai-skills",
+      "ai-commands",
+      "ai-prompts"
+    ],
+    "commands": {
+      "types": [
+        "sites"
+      ],
+      "workspaces": [
+        "dev",
+        "test",
+        "sandboxes",
+        "demos"
+      ],
+      "files": [
+        "commands/cmd-material-ui-project.sh"
+      ]
+    },
+    "scripts": {
+      "functions": [
+        "scripts/functions/fun-material-ui.sh"
+      ],
+      "args": [
+        "scripts/args/arg-material-ui.sh"
+      ],
+      "machine": [
+        "testing/site.feature"
+      ]
+    },
+    "ai": {
+      "agents": [
+        "ai/agents/material-ui-app-builder.md",
+        "ai/agents/material-ui-tester.md"
+      ],
+      "skills": [
+        "ai/skills/material-ui-scenarios"
+      ],
+      "commands": [
+        "ai/commands/material-ui-test.md"
+      ],
+      "prompts": [
+        "ai/prompts/material-ui-build-and-test.md",
+        "ai/prompts/material-ui-scenarios-for-an-app.md"
+      ]
+    },
+    "features": [
+      "features/material-ui.feature",
+      "features/material-ui-runtimes.feature"
+    ],
+    "featuresSite": "cmd-material-ui-project.sh ci-material-ui --install --runtime docker"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@webship.co/workspace-plugin-api": "^1.0.13",
+    "typescript": "^5.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
